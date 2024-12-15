@@ -1,0 +1,27 @@
+@if (showModal$ | async) {
+    <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div class="bg-white rounded-lg p-6 w-96 max-w-full mx-4">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-bold">Select a Wallet</h2>
+          <button 
+            (click)="closeModal()"
+            class="text-gray-500 hover:text-gray-700"
+          >
+            ✕
+          </button>
+        </div>
+        
+        <div class="space-y-3">
+          @for (wallet of wallets; track wallet.name) {
+            <button
+              (click)="connectWallet(wallet)"
+              class="w-full flex items-center justify-between p-3 rounded-lg border hover:border-blue-500 transition-colors"
+            >
+              <span class="font-medium">{{ wallet.name }}</span>
+              <img [src]="wallet.icon" [alt]="wallet.name" class="h-6 w-6" />
+            </button>
+          }
+        </div>
+      </div>
+    </div>
+  }

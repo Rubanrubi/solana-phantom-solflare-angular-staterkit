@@ -1,0 +1,101 @@
+<nav class="py-4 bg-white dark:bg-gray-800 antialiased">
+    <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0">
+      <div
+        class="flex flex-wrap items-center justify-between gap-4 lg:flex-nowrap"
+      >
+        <div class="lg:order-1 shrink-0">
+          <a href="#" title="" class="">
+            <img
+              class="block w-auto h-12 dark:hidden"
+              src="assets/bx-logo.png"
+              alt="Company Logo"
+            />
+            <img
+              class="hidden w-auto h-12 dark:block"
+              src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/logo-full-dark.svg"
+              alt=""
+            />
+          </a>
+        </div>
+  
+        <div class="flex items-center justify-end lg:space-x-2 lg:order-3">
+          <!-- If wallet is connected -->
+          @if (walletConnected$ | async) {
+          <div>
+            <div class="flex items-center space-x-2">
+              <div class="relative inline-block text-left">
+                <button
+                  (click)="togglNetworkDropdown()"
+                  class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                >
+                {{ network$ | async }}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 inline ml-2"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </button>
+              
+                <div
+                  *ngIf="isDropdownOpen"
+                  class="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                >
+                  <ul class="py-1">
+                    <li>
+                      <button
+                        class="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                        (click)="changeNetwork(networks.Devnet)"
+                      >
+                        Devnet
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        class="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                        (click)="changeNetwork(networks.Mainnet)"
+                      >
+                        Mainnet
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>              
+              <button
+                class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+              >
+              {{ (publicKey$ | async) | truncatePublicKey }}
+              </button>
+              <button
+                (click)="disconnect()"
+                class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+              >
+                Disconnect
+              </button>
+            </div>
+          </div>
+          }
+          <!-- If wallet is not connected -->
+          @else {
+          <div>
+            <button
+              type="button"
+              (click)="connect()"
+              class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+            >
+              Connect Wallet
+            </button>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+  </nav>
+  <app-connect-wallet-modal></app-connect-wallet-modal>
+  
